@@ -8,8 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Danger
-        uses: danger/danger@v9
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.4' # Not needed with a `.ruby-version` or `.tool-versions`
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - run: bundle exec danger
 
     env:
       DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
