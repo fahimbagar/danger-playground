@@ -15,3 +15,6 @@ end
 
 deleted = git.deleted_files.include? "folderA/fileA.txt"
 failure "Don't delete my precious" if deleted
+
+modified = git.modified_files.include? "folderB/fileB.txt"
+failure "This file is under locking!!" if modified
