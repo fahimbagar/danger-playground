@@ -1,3 +1,12 @@
+#RULE: make sure that the PR has assignee
+unless github.pr_json["assignee"]
+    failure "This PR does not have any assignees yet."
+    return
+end
+
+#RULE: consider adding PR description
+message "PR description is empty. For large PRs, adding details helps with review" if github.pr_body.length < 5
+
 #RULE: make sure branch name follow format [PROJECT]-[ticket_number]
 branch = "#{github.branch_for_head}"
 if branch !~ /^([A-Z]+)-(\d+)/
