@@ -1,3 +1,12 @@
+#RULE: make sure that the PR has assignee
+unless github.pr_json["assignee"]
+    failure "This PR does not have any assignees yet."
+    return
+end
+
+#RULE: consider adding PR description
+message "PR description is empty. For large PRs, adding details helps with review" if github.pr_body.length < 5
+
 #RULE: make sure branch name follow format [PROJECT]-[ticket_number]
 branch = "#{github.branch_for_head}"
 if branch !~ /^([A-Z]+)-(\d+)/
@@ -14,7 +23,7 @@ for commit in git.commits do
 end
 
 deleted = git.deleted_files.include? "folderA/fileA.txt"
-fail ("Don't delete my precious: folderA/fileA.txt") if deleted
+failure "Don't delete my precious: folderA/fileA.txt" if deleted
 
 modified = git.modified_files.include? "folderB/fileB.txt"
-fail ("This folderB/fileB.txt is under maintenance!!") if modified
+failure "This folderB/fileB.txt is under maintenance!!" if modified
