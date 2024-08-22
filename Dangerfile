@@ -14,7 +14,7 @@ for commit in git.commits do
 end
 
 deleted = git.deleted_files.include? "folderA/fileA.txt"
-failure "Don't delete my precious: folderA/fileA.txt" if deleted
+fail ("Don't delete my precious: folderA/fileA.txt") if deleted
 
 modified = git.modified_files.include? "folderB/fileB.txt"
-failure "This folderB/fileB.txt is under maintenance!!" if modified
+fail ("This folderB/fileB.txt is under maintenance!!") if modified
