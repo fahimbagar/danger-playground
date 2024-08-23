@@ -16,7 +16,9 @@ end
 # RULE: check if commit message follows the format "[PROJECT]-[ticket_number]: [description]"
 for commit in git.commits do
     #Exclude Merge or Revert commit title
-    next if commit.message =~ /^(Merge remote-tracking branch '.*' into .*)|(Revert ".*")|(Merge branch '.*' into .*)$/
+    first_line = commit.message.split("\n").first
+    message ("#{first_line}")
+    next if first_line =~ /^(Merge remote-tracking branch '.*' into .*)|(Revert ".*")|(Merge branch '.*' into .*)$/
 
     if commit.message !~ /^#{branch}:\s(.)*/
         fail ("Hello @#{github.pr_author}, commit message \"#{commit.message}\" must follow the defined format \"#{branch}: [description]\"")
